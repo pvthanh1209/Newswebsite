@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newswebsite", "Newswebsite\Newswebsite.csproj", "{721999CD-6A05-45DF-AD88-34F0E78284CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "News.Base", "..\News.Base\News.Base.csproj", "{0C8AA2AA-E2F9-49A7-A390-2FA2EEDC4ACF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{721999CD-6A05-45DF-AD88-34F0E78284CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{721999CD-6A05-45DF-AD88-34F0E78284CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{721999CD-6A05-45DF-AD88-34F0E78284CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{721999CD-6A05-45DF-AD88-34F0E78284CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C8AA2AA-E2F9-49A7-A390-2FA2EEDC4ACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C8AA2AA-E2F9-49A7-A390-2FA2EEDC4ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C8AA2AA-E2F9-49A7-A390-2FA2EEDC4ACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C8AA2AA-E2F9-49A7-A390-2FA2EEDC4ACF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5ABF8A54-E7B4-4100-9F18-72720B55762F}
+	EndGlobalSection
+EndGlobal
