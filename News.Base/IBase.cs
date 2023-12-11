@@ -8,6 +8,6 @@ namespace News.Base
 {
     public interface IBase
     {  
-        //void Commit();
+        void Commit();
     }
 }
