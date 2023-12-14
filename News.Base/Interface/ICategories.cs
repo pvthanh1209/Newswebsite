@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace News.Base.Interface
 {
-    public interface IUsers: IRepository<User>
+    public interface ICategories: IRepository<Category>
     {
-        List<User> GetUserListAllPaging(string search, int offset, int limit);
+        List<Category> GetCategoryListAll(string search);
     }
 }

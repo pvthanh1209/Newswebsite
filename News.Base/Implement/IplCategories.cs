@@ -11,20 +11,21 @@ using System.Threading.Tasks;
 
 namespace News.Base.Implement
 {
-    public class IplUser :Repository<User>, IUsers
+    public class IplCategories : Repository<Category>, ICategories
     {
-        public IConfiguration _configuration { get; }
+        public IConfiguration _configuration { get; set; }
         internal string _cnnString = string.Empty;
         public NewsEdgeContext _dbContext;
-        public IplUser(NewsEdgeContext dbContext, IConfiguration configuration) : base(dbContext)
+        public IplCategories(NewsEdgeContext dbContext, IConfiguration configuration) : base(dbContext)
         {
             _dbContext = dbContext;
             _configuration = configuration;
             _cnnString = _configuration.GetConnectionString("DefaultConnection");
         }
-        public List<User> GetUserListAllPaging(string search, int offset, int limit)
+
+        public List<Category> GetCategoryListAll(string search)
         {
-            var list = new List<User>();
+            var list = new List<Category>();
             var unitOfWork = new UnitOfWorkFactory(_cnnString);
             try
             {
@@ -32,9 +33,7 @@ namespace News.Base.Implement
                 {
                     var p = new DynamicParameters();
                     p.Add("@search", search);
-                    p.Add("@offset", offset);
-                    p.Add("@limit", limit);
-                    list = u.GetIEnumerable<User>("SP_GetUser_ListAllPaging", p).ToList();
+                    list = u.GetIEnumerable<Category>("Sp_GetCategoryByTree_LisAllPaging", p).ToList();
                 }
             }
             catch (Exception ex)

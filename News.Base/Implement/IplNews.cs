@@ -11,30 +11,32 @@ using System.Threading.Tasks;
 
 namespace News.Base.Implement
 {
-    public class IplUser :Repository<User>, IUsers
+    public class IplNews : Repository<News.Base.Models.News>, INews
     {
-        public IConfiguration _configuration { get; }
+        public IConfiguration _configuration { get; set; }
         internal string _cnnString = string.Empty;
         public NewsEdgeContext _dbContext;
-        public IplUser(NewsEdgeContext dbContext, IConfiguration configuration) : base(dbContext)
+        public IplNews(NewsEdgeContext dbContext, IConfiguration configuration) : base(dbContext)
         {
             _dbContext = dbContext;
             _configuration = configuration;
             _cnnString = _configuration.GetConnectionString("DefaultConnection");
         }
-        public List<User> GetUserListAllPaging(string search, int offset, int limit)
+
+        public List<Models.News> GetNewListAllPaging(string search, int cateId, int offset, int limit)
         {
-            var list = new List<User>();
+            var list = new List<Models.News>();
             var unitOfWork = new UnitOfWorkFactory(_cnnString);
             try
-            {
+            {         
                 using (var u = unitOfWork.Create(false))
                 {
                     var p = new DynamicParameters();
                     p.Add("@search", search);
+                    p.Add("@cateId", cateId);
                     p.Add("@offset", offset);
                     p.Add("@limit", limit);
-                    list = u.GetIEnumerable<User>("SP_GetUser_ListAllPaging", p).ToList();
+                    list = u.GetIEnumerable<Models.News>("Sp_GetNewListAllPaging", p).ToList();
                 }
             }
             catch (Exception ex)

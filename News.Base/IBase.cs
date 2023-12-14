@@ -11,6 +11,8 @@ namespace News.Base
     {  
         IUsers users { get; }
         IAccount account { get; }
+        ICategories categories { get; }
+        INews news { get; }
         void Commit();
     }
 }

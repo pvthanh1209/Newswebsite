@@ -41,6 +41,22 @@ namespace Doctors.Base
                 return _accountRepo ?? (_accountRepo = new IplAccount(_dbContext, _configuration));
             }
         }
+        private ICategories _categoriesRepo;
+        public ICategories categories
+        {
+            get
+            {
+                return _categoriesRepo ?? (_categoriesRepo = new IplCategories(_dbContext, _configuration));
+            }
+        }
+        private INews _newsRepo;
+        public INews news
+        {
+            get
+            {
+                return _newsRepo ?? (_newsRepo = new IplNews(_dbContext, _configuration));
+            }
+        }
 
         public void Commit()
         {
