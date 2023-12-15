@@ -1,49 +1,86 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Newswebsite</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Newswebsite.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Newswebsite</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+﻿<!doctype html>
+<html class="no-js" lang="">
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - Newswebsite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+<!-- Mirrored from www.radiustheme.com/demo/html/newsedge/newsedge/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Dec 2023 07:02:20 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>NewsEdge | Trang chủ</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/img/favicon.png">
+    <!-- Normalize CSS -->
+    <link href="~/assets/css/normalize.css" rel="stylesheet" />
+    <!-- Main CSS -->
+    <link href="~/assets/css/main.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Animate CSS -->
+    <link href="~/assets/css/animate.min.css" rel="stylesheet" />
+    <!-- Font-awesome CSS-->
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Owl Caousel CSS -->
+    <link href="~/assets/vendor/owlcarousel/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/owlcarousel/owl.theme.default.min.css" rel="stylesheet" />
+    <!-- Main Menu CSS -->
+    <link href="~/assets/css/meanmenu.min.css" rel="stylesheet" />
+    <!-- Magnific CSS -->
+    <link href="~/assets/css/magnific-popup.css" rel="stylesheet" />
+    <!-- Switch Style CSS -->
+    <link href="~/assets/css/hover-min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="~/assets/style.css" rel="stylesheet" />
+    <!-- For IE -->
+    <link href="~/assets/css/ie-only.css" rel="stylesheet" />
+    <!-- Modernizr Js -->
+    <script src="~/assets/js/modernizr-2.8.3.min.js"></script>
+</head>
+
+<body>
+    <div id="preloader"></div>
+    <!-- Preloader End Here -->
+    <div id="wrapper" class="wrapper">
+        @Html.Partial("_header.cshtml")
+        @RenderBody()
+        <!-- Category Area End Here -->
+        <!-- Footer Area Start Here -->
+        @Html.Partial("_footer.cshtml")
+        <!-- Footer Area End Here -->
+        @Html.Partial("_nav.cshtml")
+    </div>
+    <!-- Wrapper End -->
+    <!-- jquery-->
+    <script src="~/assets/js/jquery-2.2.4.min.js"></script>
+    <!-- Plugins js -->
+    <script src="~/assets/js/plugins.js"></script>
+    <!-- Popper js -->
+    <script src="~/assets/js/popper.js"></script>
+    <!-- Bootstrap js -->
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <!-- WOW JS -->
+    <script src="~/assets/js/wow.min.js"></script>
+    <!-- Owl Cauosel JS -->
+    <script src="~/assets/vendor/owlcarousel/owl.carousel.min.js"></script>
+    <!-- Meanmenu Js -->
+    <script src="~/assets/js/jquery.meanmenu.min.js"></script>
+    <!-- Srollup js -->
+    <script src="~/assets/js/jquery.scrollup.min.js"></script>
+    <!-- jquery.counterup js -->
+    <script src="~/assets/js/jquery.counterup.min.js"></script>
+    <script src="~/assets/js/waypoints.min.js"></script>
+    <!-- Isotope js -->
+    <script src="~/assets/js/isotope.pkgd.min.js"></script>
+    <!-- Magnific Popup -->
+    <script src="~/assets/js/jquery.magnific-popup.min.js"></script>
+    <!-- Ticker Js -->
+    <script src="~/assets/js/ticker.js"></script>
+    <!-- Custom Js -->
+    <script src="~/assets/js/main.js"></script>
+    @RenderSection("Scripts", required: false)
 </body>
+
+
+<!-- Mirrored from www.radiustheme.com/demo/html/newsedge/newsedge/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Dec 2023 07:03:25 GMT -->
 </html>

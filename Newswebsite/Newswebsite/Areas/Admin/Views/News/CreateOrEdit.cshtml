@@ -1,0 +1,96 @@
+﻿@using News.Base.Models
+@model News
+@{
+    ViewData["Title"] = "CreateOrEdit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var titleNews = string.Empty;
+    if(Model.Id > 0)
+    {
+        titleNews = "Chỉnh sửa bài viết";
+    }
+    else
+    {
+        titleNews = "Thêm mới bài viết";
+    }
+    var lstCate = (List<Category>)ViewBag.ListCate;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">@titleNews</h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">@titleNews</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row project-wrapper">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-card">
+                <div class="row py-3">
+                    <form method="post" id="frmSetting">
+                        @Html.HiddenFor(m => m.Id, new { @id = "ipHiddenId" })
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="Name" class="form-label"> Thể loại bài viết</label>
+                                <select class="form-select" asp-for="@Model.CateId" id="sltCategory">
+                                    <option value="0">--Chọn thể loại bài viết--</option>
+                                    @if(lstCate != null && lstCate.Count > 0)
+                                    {
+                                        foreach(var item in lstCate)
+                                        {
+                                            if(Model.CateId == item.Id)
+                                            {
+                                                <option value="@item.Id" selected>@item.CateName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Id">@item.CateName</option>
+                                            }                                          
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Tiêu đề</label>
+                                @Html.TextBoxFor(m => m.Title, new {@class = "form-control", @id="ipTitle"})
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Mô tả ngắn</label>
+                                @Html.TextBoxFor(m => m.ShortDescription, new { @class = "form-control", @id = "ipShortDescription" })
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Ảnh đai diện</label>
+                                <input type="file" class="form-control" id="ipFileUpload" />
+                                @if (!string.IsNullOrEmpty(Model.Thumb))
+                                {
+                                    <img src="/Uploads/Images/@Model.Thumb" width="60" height="60" alt="Ảnh đại diện" />    
+                                }
+                            </div>
+                            <div class="mb-3 col-md-12">
+                                <label for="Name" class="form-label"> Mô tả</label>
+                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @id = "TxtDescription" })
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <button type="button" class="btn btn-primary" id="btnSubmit">Lưu</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- end card body -->
+    </div>
+</div>
+@section scripts {
+    <script>
+        var editor = base.CreateCKEditor('TxtDescription');
+    </script>
+}
+

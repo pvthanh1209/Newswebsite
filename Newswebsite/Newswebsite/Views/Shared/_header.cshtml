@@ -1,0 +1,108 @@
+﻿        <!-- Header Area Start Here -->
+<header>
+    <div id="header-layout1" class="header-style1">
+        <div class="main-menu-area bg-primarytextcolor header-menu-fixed" id="sticker">
+            <div class="container">
+                <div class="row no-gutters d-flex align-items-center">
+                    <div class="col-lg-2 d-none d-lg-block">
+                        <div class="logo-area">
+                            <a href="/">
+                                <img src="~/assets/img/logo.png" alt="logo" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-7 position-static min-height-none">
+                        <div class="ne-main-menu">
+                            <nav id="dropdown">
+                                <ul>
+                                    <li class="active">
+                                        <a href="/">Trang chủ</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Tin tức</a>                                  
+                                    </li>
+                                    @await Component.InvokeAsync("ViewHeader")
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-12 text-right position-static">
+                        <div class="header-action-item">
+                            <ul>
+                                <li>
+                                    <form id="top-search-form" class="header-search-light">
+                                        <input type="text" class="search-input" placeholder="Search...." required="" style="display: none;">
+                                        <button class="search-button">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal">
+                                        <i class="fa fa-user" aria-hidden="true"></i>Login
+                                    </button>
+                                </li>
+                                <li>
+                                    <div id="side-menu-trigger" class="offcanvas-menu-btn">
+                                        <a href="#" class="menu-bar">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </a>
+                                        <a href="#" class="menu-times close">
+                                            <span></span>
+                                            <span></span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header Area End Here -->
+<!-- News Feed Area Start Here -->
+<section class="bg-accent border-bottom add-top-margin">
+    <div class="container">
+        <div class="row no-gutters d-flex align-items-center">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                <div class="topic-box topic-box-margin">Bài viết nóng</div>
+            </div>
+            <div class="col-lg-10 col-md-9 col-sm-8 col-6">
+                <div class="feeding-text-dark">
+                    <ol id="sample" class="ticker">
+                        <li>
+                            <a href="javascript:void(0)">
+                                McDonell Kanye West highlights difficulties for celebritiesComplimentary decor and
+                                design advicewith Summit Park homes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">Magnificent Image Of The New Hoover Dam Bridge Taking Shape</a>
+                        </li>
+                        <li>
+                            <a href="#">If Obama Had Governed Like This in 2017 He'd Be the Transformational.</a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- News Feed Area End Here -->
+<!-- News Info List Area Start Here -->
+<section class="bg-body">
+    <div class="container">
+        <ul class="news-info-list text-center--md">
+            <li>
+                <i class="fa fa-map-marker" aria-hidden="true"></i>Việt Nam
+            </li>
+            <li>
+                <i class="fa fa-calendar" aria-hidden="true"></i><span id="current_date"></span>
+            </li>           
+        </ul>
+    </div>
+</section>

@@ -1,6 +1,38 @@
 ﻿var news = {
     init: function () {
         news.tblNews();
+        $('#btnSeach').click(function () {
+            news.tblNews();
+        });
+        $('#btnSubmit').click(function () {
+            var formData = new FormData();
+            formData.append("Id", $('#ipHiddenId').val());
+            formData.append("CateId", $('#sltCategory').val());
+            formData.append("Title", $('#ipTitle').val());  
+            formData.append("ShortDescription", $('#ipShortDescription').val());
+            var fileUpload = $("#ipFileUpload").get(0);
+            var files = fileUpload.files;
+            formData.append("fileUpload", files[0]);  
+            var desc = CKEDITOR.instances['TxtDescription'].getData();
+            formData.append("Description", desc);
+            $.ajax({
+                url: '/Admin/News/CreateOrEdit',
+                type: 'post',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (res) {
+                    if (res.status) {
+                        base.success(res.message);
+                        setTimeout(function () {
+                            window.location.href = '/Admin/News';
+                        }, 1500);
+                    } else {
+                        base.error(res.message);
+                    }
+                }
+            });
+        });
     },
     tblNews: function () {
         $("#tblNews").bootstrapTable('destroy');
@@ -94,7 +126,7 @@
                                                 success: function (res) {
                                                     if (res.status) {
                                                         base.success(res.message);
-                                                        $("#tblAccount").bootstrapTable('refresh', { silent: true });
+                                                        $("#tblNews").bootstrapTable('refresh', { silent: true });
                                                     }
                                                     else {
                                                         base.error(res.message);
@@ -146,7 +178,7 @@
                                                 success: function (res) {
                                                     if (res.status) {
                                                         base.success(res.message);
-                                                        $("#tblAccount").bootstrapTable('refresh', { silent: true });
+                                                        $("#tblNews").bootstrapTable('refresh', { silent: true });
                                                     }
                                                     else {
                                                         base.error(res.message);
@@ -198,7 +230,7 @@
                                                 success: function (res) {
                                                     if (res.status) {
                                                         base.success(res.message);
-                                                        $("#tblAccount").bootstrapTable('refresh', { silent: true });
+                                                        $("#tblNews").bootstrapTable('refresh', { silent: true });
                                                     }
                                                     else {
                                                         base.error(res.message);
@@ -223,20 +255,44 @@
                     class: 'CssAction',
                     formatter: function (value, row, index) {
                         var action = "";
-                        action += '<a class=" btn btn-primary btn-sm btnEdit" title="Sửa"><i class="bx bx-pencil"></i></a>';
+                        action += '<a href="/Admin/News/CreateOrEdit?Id=' + row.id +'" class=" btn btn-primary btn-sm btnEdit" title="Sửa"><i class="bx bx-pencil"></i></a>\
+                        <a class=" btn btn-danger btn-sm btnDelete" title="Xóa"><i class="ri-delete-bin-fill"></i></a>';
                         return action;
                     },
                     events: {
-                        'click .btnEdit': function (e, value, row, index) {
-                            $('#ipHiddenId').val(row.id);
-                            $('#ipFullName').val(row.fullName);
-                            $('#ipEmail').val(row.email);
-                            $('#ipPhoneNumber').val(row.phoneNumber);
-                            $('#ipUsername').val(row.username).prop("readonly", true);
-                            $('#ipPassword').val('');
-                            $('#ipAddress').val(row.address);
-                            $('#titleModal').text('Chỉnh sửa nhân viên');
-                            $('#modalsAddEdit').modal('show');
+                        'click .btnDelete': function (e, value, row, index) {
+                            $.confirm({
+                                title: 'Cảnh báo!',
+                                content: 'Bạn chắc chắn muốn xóa thông tin bài viết này không?',
+                                buttons: {
+                                    formSubmit: {
+                                        text: 'Xác nhận',
+                                        btnClass: 'btn btn-primary',
+                                        action: function () {
+                                            $.ajax({
+                                                url: '/Admin/News/Delete',
+                                                type: 'post',
+                                                data: {
+                                                    Id: row.id
+                                                },
+                                                success: function (res) {
+                                                    if (res.status) {
+                                                        base.success(res.message);
+                                                        $("#tblNews").bootstrapTable('refresh', { silent: true });
+                                                    }
+                                                    else {
+                                                        base.error(res.message);
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    },
+                                    cancel: {
+                                        text: 'Đóng',
+                                        btnClass: 'btn btn-danger'
+                                    },
+                                }
+                            });
                         },
                     }
                 },
@@ -247,7 +303,6 @@
             },
         })
     },
-}
 }
 $(document).ready(function () {
     news.init();

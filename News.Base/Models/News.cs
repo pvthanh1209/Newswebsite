@@ -14,7 +14,7 @@ namespace News.Base.Models
         public string? Thumb { get; set; }
         public bool IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public int? AccountId { get; set; }
+        public int AccountId { get; set; }
         public bool IsHome { get; set; }
         public bool IsHot { get; set; }
         [NotMapped]

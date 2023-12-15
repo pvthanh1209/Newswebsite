@@ -1,0 +1,44 @@
+﻿@model CategoryModel
+@{
+    var lstCateParentOne = Model.ListCateParentOne;
+}
+@if (Model != null)
+{
+    if (Model.ListCateParent != null && Model.ListCateParent.Count > 0)
+    {
+        foreach (var item in Model.ListCateParent)
+        {
+            var ckCateParent = lstCateParentOne.Where(x => x.Parents == item.Id).ToList();
+            if (ckCateParent != null && ckCateParent.Count > 0)
+            {
+                <li class="panel panel-default">
+                    <div class="panel-heading">
+                        <a aria-expanded="false" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse_@item.Id">
+                            <i class="fa fa-file-text" aria-hidden="true"></i>@item.CateName
+                        </a>
+                    </div>
+                    <div aria-expanded="false" id="collapse_@item.Id" role="tabpanel" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul class="offcanvas-sub-nav">
+                                @foreach(var parent in ckCateParent)
+                                {
+                                    <li>
+                                        <a href="post-style-1.html">@parent.CateName</a>
+                                    </li>
+                                }                                               
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href="archive.html">
+                        <i class="fa fa-archive" aria-hidden="true"></i>@item.CateName
+                    </a>
+                </li>
+            }
+        }
+    }
+}

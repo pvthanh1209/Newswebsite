@@ -1,0 +1,34 @@
+﻿@model CategoryModel
+@{
+    var lstCateParentOne = Model.ListCateParentOne;
+}
+@if(Model != null)
+{
+    if(Model.ListCateParent != null && Model.ListCateParent.Count > 0)
+    {
+        foreach(var item in Model.ListCateParent)
+        {
+            var ckCateParent = lstCateParentOne.Where(x => x.Parents == item.Id).ToList();
+            if(ckCateParent != null && ckCateParent.Count > 0)
+            {
+                <li>
+                    <a href="javascript:void(0)">@item.CateName</a>
+                    <ul class="ne-dropdown-menu">
+                        @foreach(var parent in ckCateParent)
+                        {
+                            <li>
+                                <a href="author-post.html">@parent.CateName</a>
+                            </li>
+                        }                 
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href="post-style-1.html">@item.CateName</a>
+                </li>
+            }
+        }
+    }
+}
