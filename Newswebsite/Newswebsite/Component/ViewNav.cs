@@ -14,8 +14,8 @@ namespace Newswebsite.Component
         public IViewComponentResult Invoke()
         {
             var model = new CategoryModel();
-            model.ListCateParent = _base.categories.Get(x => x.IsActive == true && x.IsMenu == true && x.Parents == 0).Take(3).ToList();
-            model.ListCateParentOne = _base.categories.Get(x => x.IsActive == true && x.IsMenu == true && x.Parents > 0).ToList();
+            model.ListCateParent = _base.categories.Get(x => x.IsActive == true && x.IsMenu == true).Take(3).ToList();
+            model.ListCateDetail = _base.categoriesDetail.Get().ToList();
             return View(model);
         }
     }

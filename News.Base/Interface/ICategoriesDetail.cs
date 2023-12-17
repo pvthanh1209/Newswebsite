@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace News.Base.Interface
 {
-    public interface ICategories: IRepository<Category>
+    public interface ICategoriesDetail: IRepository<CategoriesDetail>
     {
-        List<Category> GetCategoryListAll(string search, int offset, int limit);
     }
 }

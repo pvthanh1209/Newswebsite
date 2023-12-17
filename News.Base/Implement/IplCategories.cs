@@ -23,7 +23,7 @@ namespace News.Base.Implement
             _cnnString = _configuration.GetConnectionString("DefaultConnection");
         }
 
-        public List<Category> GetCategoryListAll(string search)
+        public List<Category> GetCategoryListAll(string search, int offset, int limit)
         {
             var list = new List<Category>();
             var unitOfWork = new UnitOfWorkFactory(_cnnString);
@@ -33,6 +33,8 @@ namespace News.Base.Implement
                 {
                     var p = new DynamicParameters();
                     p.Add("@search", search);
+                    p.Add("@offset", offset);
+                    p.Add("@limit", limit);
                     list = u.GetIEnumerable<Category>("Sp_GetCategoryByTree_LisAllPaging", p).ToList();
                 }
             }

@@ -1,0 +1,175 @@
+﻿@using News.Base.Models
+@model News
+@{
+    ViewData["Title"] = "NewDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var lstNews = (List<News>)ViewBag.ListNews;
+    var lstNewRelated = (List<News>)ViewBag.ListNewRelated;
+}
+@if(Model != null)
+{
+    var item = Model;
+    <section class="bg-body section-space-less30">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12 mb-30">
+                    <div class="news-details-layout1">
+                        <div class="position-relative mb-30">
+                            <img src="/Uploads/Images/@item.Thumb" alt="news-details" class="img-fluid">
+                            <div class="topic-box-top-sm">
+                                <div class="topic-box-sm color-cinnabar mb-20">@(!string.IsNullOrEmpty(item.CateNameDetail) ? item.CateNameDetail : item.CateName)</div>
+                            </div>
+                        </div>
+                        <h2 class="title-semibold-dark size-c30">@item.Title</h2>
+                        <ul class="post-info-dark mb-30">
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <span>By</span> @item.FullName
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>@item.CreatedDate.Value.ToString("dd/MM/yyyy")
+                                </a>
+                            </li>                   
+                        </ul>
+                        
+                        @Html.Raw(item.Description)
+                        <!--comment-->
+                        <div class="comments-area">
+                            <h2 class="title-semibold-dark size-xl border-bottom mb-40 pb-20">03 Comments</h2>
+                            <ul>
+                                <li>
+                                    <div class="media media-none-xs">
+                                        <img src="img/blog1.jpg" class="img-fluid rounded-circle" alt="comments">
+                                        <div class="media-body comments-content media-margin30">
+                                            <h3 class="title-semibold-dark">
+                                                <a href="#">
+                                                    Nitiya ,
+                                                    <span> August 29, 2017</span>
+                                                </a>
+                                            </h3>
+                                            <p>
+                                                Borem Ipsum is simply dummy text of the printing and typesetting industry
+                                                Lorem Ipsum has been the industry's standard dummy text.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="media media-none-xs">
+                                        <img src="img/blog2.jpg" class="img-fluid rounded-circle" alt="comments">
+                                        <div class="media-body comments-content media-margin30">
+                                            <h3 class="title-semibold-dark">
+                                                <a href="#">
+                                                    Fahim ,
+                                                    <span> August 29, 2017</span>
+                                                </a>
+                                            </h3>
+                                            <p>
+                                                Borem Ipsum is simply dummy text of the printing and typesetting industry
+                                                Lorem Ipsum has been the industry's standard dummy text.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="leave-comments">
+                            <h2 class="title-semibold-dark size-xl mb-40">Leave Comments</h2>
+                            <form id="leave-comments">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-group">
+                                            <input placeholder="Name*" class="form-control" type="text">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-group">
+                                            <input placeholder="Email*" class="form-control" type="email">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-group">
+                                            <input placeholder="Web Address" class="form-control" type="text">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <textarea placeholder="Message*" class="textarea form-control" id="form-message" rows="8" cols="20"></textarea>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group mb-none">
+                                            <button type="submit" class="btn-ftg-ptp-45">Post Comment</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="ne-sidebar sidebar-break-md col-lg-4 col-md-12">
+                    @if(lstNewRelated != null && lstNewRelated.Count > 0)
+                    {
+                        <div class="sidebar-box">
+                            <div class="topic-border color-cod-gray mb-5">
+                                <div class="topic-box-lg color-cod-gray">Tin tức liên quan</div>
+                            </div>
+                            <div class="row">
+                                @foreach(var related in lstNewRelated)
+                                {
+                                    <div class="col-lg-6 col-md-4 col-sm-6 col-6">
+                                        <div class="mt-25 position-relative">
+                                            <div class="topic-box-top-xs">
+                                                <div class="topic-box-sm color-cod-gray mb-20">@(!string.IsNullOrEmpty(related.CateNameDetail) ? related.CateNameDetail : related.CateName)</div>
+                                            </div>
+                                            <a href="single-news-1.html" class="mb-10 display-block img-opacity-hover">
+                                                <img src="/Uploads/Images/@related.Thumb" alt="ad" class="img-fluid m-auto width-100">
+                                            </a>
+                                            <h3 class="title-medium-dark size-md mb-none">
+                                                <a href="/News/NewDetail?Id=@related.Id">@related.Title</a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    @if (lstNews != null && lstNews.Count > 0)
+                    {
+                        <div class="sidebar-box">
+                            <div class="topic-border color-cod-gray mb-5">
+                                <div class="topic-box-lg color-cod-gray">Tin tức mới</div>
+                            </div>
+                            <div class="row">
+                                @foreach (var related in lstNews)
+                                {
+                                    <div class="col-lg-6 col-md-4 col-sm-6 col-6">
+                                        <div class="mt-25 position-relative">
+                                            <div class="topic-box-top-xs">
+                                                <div class="topic-box-sm color-cod-gray mb-20">@(!string.IsNullOrEmpty(related.CateNameDetail) ? related.CateNameDetail : related.CateName)</div>
+                                            </div>
+                                            <a href="single-news-1.html" class="mb-10 display-block img-opacity-hover">
+                                                <img src="/Uploads/Images/@related.Thumb" alt="ad" class="img-fluid m-auto width-100">
+                                            </a>
+                                            <h3 class="title-medium-dark size-md mb-none">
+                                                <a href="/News/NewDetail?Id=@related.Id">@related.Title</a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}
+

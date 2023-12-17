@@ -13,9 +13,9 @@ namespace News.Base.Models
         public bool IsActive { get; set; }
         public string? ShortDescription { get; set; }
         public bool IsMenu { get; set; }
+        public bool IsHome { get; set; }    
         public DateTime? CreatedDate { get; set; }
-        public int Parents { get; set; }
         [NotMapped]
-        public string HCateName { get; set; }
+        public int TotalRow { get; set; }
     }
 }

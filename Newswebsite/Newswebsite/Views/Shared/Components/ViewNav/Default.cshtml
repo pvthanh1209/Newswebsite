@@ -1,6 +1,6 @@
 ﻿@model CategoryModel
 @{
-    var lstCateParentOne = Model.ListCateParentOne;
+    var lstCateDetail = Model.ListCateDetail;
 }
 @if (Model != null)
 {
@@ -8,8 +8,8 @@
     {
         foreach (var item in Model.ListCateParent)
         {
-            var ckCateParent = lstCateParentOne.Where(x => x.Parents == item.Id).ToList();
-            if (ckCateParent != null && ckCateParent.Count > 0)
+            var ckCateDetail = lstCateDetail.Where(x => x.CateId == item.Id).ToList();
+            if (ckCateDetail != null && ckCateDetail.Count > 0)
             {
                 <li class="panel panel-default">
                     <div class="panel-heading">
@@ -20,10 +20,10 @@
                     <div aria-expanded="false" id="collapse_@item.Id" role="tabpanel" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul class="offcanvas-sub-nav">
-                                @foreach(var parent in ckCateParent)
+                                @foreach (var parent in ckCateDetail)
                                 {
                                     <li>
-                                        <a href="post-style-1.html">@parent.CateName</a>
+                                        <a href="post-style-1.html">@parent.Name</a>
                                     </li>
                                 }                                               
                             </ul>

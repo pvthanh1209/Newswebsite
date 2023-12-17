@@ -1,6 +1,6 @@
 ﻿@model CategoryModel
 @{
-    var lstCateParentOne = Model.ListCateParentOne;
+    var lstCateDetail = Model.ListCateDetail;
 }
 @if(Model != null)
 {
@@ -8,16 +8,16 @@
     {
         foreach(var item in Model.ListCateParent)
         {
-            var ckCateParent = lstCateParentOne.Where(x => x.Parents == item.Id).ToList();
-            if(ckCateParent != null && ckCateParent.Count > 0)
+            var ckCateDetail = lstCateDetail.Where(x => x.CateId == item.Id).ToList();
+            if (ckCateDetail != null && ckCateDetail.Count > 0)
             {
                 <li>
                     <a href="javascript:void(0)">@item.CateName</a>
                     <ul class="ne-dropdown-menu">
-                        @foreach(var parent in ckCateParent)
+                        @foreach (var parent in ckCateDetail)
                         {
                             <li>
-                                <a href="author-post.html">@parent.CateName</a>
+                                <a href="author-post.html">@parent.Name</a>
                             </li>
                         }                 
                     </ul>

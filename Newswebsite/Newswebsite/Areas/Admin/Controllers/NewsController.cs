@@ -60,6 +60,25 @@ namespace Newswebsite.Areas.Admin.Controllers
                 return Error(ex.Message);
             }
         }
+        public JsonResult ChangeIsOutstanding(int Id, int type)
+        {
+            try
+            {
+                var entity = _base.news.GetByID(Id);
+                if (entity == null)
+                {
+                    return Error("Thông tin thể loại không tồn tại");
+                }
+                entity.IsOutstanding = (entity.IsOutstanding ? false : true);
+                _base.news.Update(entity);
+                _base.Commit();
+                return Success("Cập nhật trạng thái thành công");
+            }
+            catch (Exception ex)
+            {
+                return Error(ex.Message);
+            }
+        }
         [HttpGet]
         public IActionResult CreateOrEdit(int Id)
         {
@@ -128,6 +147,7 @@ namespace Newswebsite.Areas.Admin.Controllers
                         return Error("Không tìm thấy thông tin bài viết");
                     }
                     entity.CateId = model.CateId;
+                    entity.CateDetaiId = model.CateDetaiId;
                     entity.Title = model.Title;
                     entity.Thumb = (!string.IsNullOrEmpty(pathDb) ? pathDb : entity.Thumb);
                     entity.ShortDescription = model.ShortDescription;
@@ -159,6 +179,11 @@ namespace Newswebsite.Areas.Admin.Controllers
             {
                 return Error(ex.Message);
             }
+        }
+        public JsonResult GetCateDetailByCateId(int Id)
+        {
+            var entity = _base.categoriesDetail.Get(x => x.CateId == Id).ToList();
+            return Data(entity);
         }
     }
 }

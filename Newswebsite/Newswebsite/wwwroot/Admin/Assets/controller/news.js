@@ -4,10 +4,21 @@
         $('#btnSeach').click(function () {
             news.tblNews();
         });
+        $('#sltCategory').change(function () {
+            news.getCateDetailById($(this).val(), 0);
+        });
+        var url = window.location.href;
+        if (url.indexOf("CreateOrEdit") != -1) {
+            if ($('#sltCategory').val() > 0 && $('#ipHiddenId').val() > 0) {
+                news.getCateDetailById($('#sltCategory').val(), $('#ipHiddenId').val() > 0);
+            }
+        }
+
         $('#btnSubmit').click(function () {
             var formData = new FormData();
             formData.append("Id", $('#ipHiddenId').val());
             formData.append("CateId", $('#sltCategory').val());
+            formData.append("CateDetaiId", $('#sltCategoryDetail').val());
             formData.append("Title", $('#ipTitle').val());  
             formData.append("ShortDescription", $('#ipShortDescription').val());
             var fileUpload = $("#ipFileUpload").get(0);
@@ -32,6 +43,31 @@
                     }
                 }
             });
+        });
+    },
+    getCateDetailById: function (id, detaiid) {
+        $.ajax({
+            url: '/Admin/News/GetCateDetailByCateId',
+            type: 'post',
+            dataType:'json',
+            data: {
+                Id: id
+            },
+            success: function (res) {
+                var html = '';
+                if (res != null && res.length > 0) {
+                    html += '<option value="0">--Chọn chi tiết danh mục--</option>';
+                    for (var i = 0; i < res.length; i++) {
+                        if (res[i].id == detaiid) {
+                            html += '<option value="' + res[i].id + '" selected>' + res[i].name + '</option>';
+                        } else {
+                            html += '<option value="' + res[i].id + '">' + res[i].name + '</option>';
+                        }
+                    }
+                }
+                $('#sltCategoryDetail').empty;
+                $('#sltCategoryDetail').html(html);
+            }
         });
     },
     tblNews: function () {
@@ -226,6 +262,57 @@
                                                 data: {
                                                     Id: row.id,
                                                     type:3
+                                                },
+                                                success: function (res) {
+                                                    if (res.status) {
+                                                        base.success(res.message);
+                                                        $("#tblNews").bootstrapTable('refresh', { silent: true });
+                                                    }
+                                                    else {
+                                                        base.error(res.message);
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    },
+                                    cancel: {
+                                        text: 'Đóng',
+                                        btnClass: 'btn btn-danger'
+                                    },
+                                }
+                            });
+                        }
+                    }
+                },
+                {
+                    field: "isOutstanding",
+                    title: "Tin nổi bật",
+                    align: 'left',
+                    valign: 'left',
+                    formatter: function (value, row, index) {
+                        var html = '';
+                        if (value == true) {
+                            html += '<button class="btn btn-success btn-sm btnIsOutstanding">Hiển thị</button>';
+                        } else {
+                            html += '<button class="btn btn-danger btn-sm btnIsOutstanding">Không</button>';
+                        }
+                        return html;
+                    },
+                    events: {
+                        'click .btnIsOutstanding': function (e, value, row, index) {
+                            $.confirm({
+                                title: 'Cảnh báo!',
+                                content: 'Bạn chắc chắn muốn thay đổi trạng thái hiển thị tin tức nổi bật này?',
+                                buttons: {
+                                    formSubmit: {
+                                        text: 'Xác nhận',
+                                        btnClass: 'btn btn-primary',
+                                        action: function () {
+                                            $.ajax({
+                                                url: '/Admin/News/ChangeIsOutstanding',
+                                                type: 'post',
+                                                data: {
+                                                    Id: row.id,
                                                 },
                                                 success: function (res) {
                                                     if (res.status) {

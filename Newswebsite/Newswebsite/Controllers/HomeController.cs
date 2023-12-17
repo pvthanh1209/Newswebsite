@@ -1,21 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using News.Base;
+using Newswebsite.Controllers.Base;
 using Newswebsite.Models;
 using System.Diagnostics;
 
 namespace Newswebsite.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseAuthController<HomeController>
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IBase _base;
+        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, IConfiguration configuration, IBase @base) : base(@base, httpContextAccessor, configuration, logger)
         {
             _logger = logger;
+            _base = @base;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = new HomeNews();
+            model.ListNewsIsHot = _base.news.GetNewsIsHotAndIsHome();
+            model.ListCategorieIsHome = _base.categories.Get(x => x.IsActive == true && x.IsHome == true).ToList();
+            model.ListNewsIsHotHome = _base.news.GetNewsIsHotHome();
+            model.ListNewsIsActiveAll = _base.news.GetNewsIsActiveAll();
+            model.ListNewsByNew = _base.news.GetNewsIsActiveAll().Where(x => x.IsHome == true).OrderByDescending(x => x.CreatedDate).Take(10).ToList();
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

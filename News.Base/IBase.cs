@@ -13,6 +13,7 @@ namespace News.Base
         IAccount account { get; }
         ICategories categories { get; }
         INews news { get; }
+        ICategoriesDetail categoriesDetail { get; }
         void Commit();
     }
 }

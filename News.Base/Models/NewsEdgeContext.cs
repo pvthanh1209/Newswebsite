@@ -21,6 +21,7 @@ namespace News.Base.Models
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<News> News { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<CategoriesDetail> CategoriesDetails { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -83,6 +84,12 @@ namespace News.Base.Models
                 entity.Property(e => e.Username).HasMaxLength(500);
             });
 
+            modelBuilder.Entity<CategoriesDetail>(entity =>
+            {
+                entity.ToTable("CategoriesDetail");
+                entity.Property(e => e.CateId);
+                entity.Property(e => e.Name).HasMaxLength(500);
+            });
             OnModelCreatingPartial(modelBuilder);
         }
 

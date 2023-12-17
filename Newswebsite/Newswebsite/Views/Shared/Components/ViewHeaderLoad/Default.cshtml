@@ -1,0 +1,12 @@
+﻿@model List<News.Base.Models.News>
+@if (Model != null && Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        <li>
+            <a href="javascript:void(0)">
+                @item.Title
+            </a>
+        </li>
+    }
+}
