@@ -63,8 +63,8 @@
                 $('#btnRegister').prop('disabled', false);
                 if (res.status) {
                     base.success(res.message);
-                    $('#myModalRegister').hide();
-                    $('#myModalLogin').show();
+                    $('#myModalRegister').modal('hide');
+                    $('#myModalLogin').modal('show');
                 }
                 else {
                     base.error(res.message);
