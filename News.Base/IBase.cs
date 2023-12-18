@@ -14,6 +14,8 @@ namespace News.Base
         ICategories categories { get; }
         INews news { get; }
         ICategoriesDetail categoriesDetail { get; }
+        IComment comments { get; }  
+        IHistoryViewNews HistoryViewNews { get; }
         void Commit();
     }
 }

@@ -1,13 +1,19 @@
 ﻿@using News.Base.Models
 @model News
+@using News.Base.Session
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _httpContextAccessor;
 @{
     ViewData["Title"] = "NewDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var lstNews = (List<News>)ViewBag.ListNews;
     var lstNewRelated = (List<News>)ViewBag.ListNewRelated;
+    var lstComment = (List<Comment>)ViewBag.ListCommnet;
+    int totalComment = lstComment.Count;
+    var mems = SessionCustomer.GetUser(_httpContextAccessor);
 }
-@if(Model != null)
-{
+@if (Model != null)
+{   
+    <input type="hidden" id="ipNewsDetailIdHidden" value="@Model.Id" />
     var item = Model;
     <section class="bg-body section-space-less30">
         <div class="container">
@@ -31,97 +37,77 @@
                                 <a href="#">
                                     <i class="fa fa-calendar" aria-hidden="true"></i>@item.CreatedDate.Value.ToString("dd/MM/yyyy")
                                 </a>
-                            </li>                   
+                            </li>
                         </ul>
-                        
+
                         @Html.Raw(item.Description)
                         <!--comment-->
                         <div class="comments-area">
-                            <h2 class="title-semibold-dark size-xl border-bottom mb-40 pb-20">03 Comments</h2>
-                            <ul>
-                                <li>
-                                    <div class="media media-none-xs">
-                                        <img src="img/blog1.jpg" class="img-fluid rounded-circle" alt="comments">
-                                        <div class="media-body comments-content media-margin30">
-                                            <h3 class="title-semibold-dark">
-                                                <a href="#">
-                                                    Nitiya ,
-                                                    <span> August 29, 2017</span>
-                                                </a>
-                                            </h3>
-                                            <p>
-                                                Borem Ipsum is simply dummy text of the printing and typesetting industry
-                                                Lorem Ipsum has been the industry's standard dummy text.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="media media-none-xs">
-                                        <img src="img/blog2.jpg" class="img-fluid rounded-circle" alt="comments">
-                                        <div class="media-body comments-content media-margin30">
-                                            <h3 class="title-semibold-dark">
-                                                <a href="#">
-                                                    Fahim ,
-                                                    <span> August 29, 2017</span>
-                                                </a>
-                                            </h3>
-                                            <p>
-                                                Borem Ipsum is simply dummy text of the printing and typesetting industry
-                                                Lorem Ipsum has been the industry's standard dummy text.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <h2 class="title-semibold-dark size-xl border-bottom mb-40 pb-20">@totalComment Bình luận</h2>
+                            @if(totalComment > 0)
+                            {
+                                <ul style="max-height:400px; overflow-y: scroll;">
+                                    <li>
+                                        @foreach (var comment in lstComment)
+                                        {
+                                            <div class="media media-none-xs">
+                                                @*   <img src="img/blog1.jpg" class="img-fluid rounded-circle" alt="comments"> *@
+                                                <div class="media-body comments-content media-margin30">
+                                                    <h3 class="title-semibold-dark">
+                                                        <a href="javascript:void(0)">
+                                                            @comment.Username ,
+                                                            <span> @comment.CreatedDate.Value.ToString("dd/MM/yyyy")</span>
+                                                        </a>
+                                                    </h3>
+                                                    <p class="mb-0">
+                                                        @Html.Raw(comment.ContentComment)
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        }
+                                    </li>
+
+                                </ul>
+                            }
                         </div>
-                        <div class="leave-comments">
-                            <h2 class="title-semibold-dark size-xl mb-40">Leave Comments</h2>
-                            <form id="leave-comments">
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-12">
-                                        <div class="form-group">
-                                            <input placeholder="Name*" class="form-control" type="text">
-                                            <div class="help-block with-errors"></div>
+                        @if (mems != null)
+                        {
+                            <div class="leave-comments">
+                                <h2 class="title-semibold-dark size-xl mb-40">Leave Comments</h2>
+                                <form id="leave-comments">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <textarea placeholder="Nội dung bình luận*" id="txtCommentDetail" class="textarea form-control" id="form-message" rows="8" cols="20"></textarea>
+                                                <div class="help-block with-errors"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group mb-none">
+                                                <button type="button" id="btnSendComment" class="btn-ftg-ptp-45">Gửi bình luận</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <div class="form-group">
-                                            <input placeholder="Email*" class="form-control" type="email">
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <div class="form-group">
-                                            <input placeholder="Web Address" class="form-control" type="text">
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <textarea placeholder="Message*" class="textarea form-control" id="form-message" rows="8" cols="20"></textarea>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group mb-none">
-                                            <button type="submit" class="btn-ftg-ptp-45">Post Comment</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="leave-comments">
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#myModalLogin">Đăng nhập để bình luận</a>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="ne-sidebar sidebar-break-md col-lg-4 col-md-12">
-                    @if(lstNewRelated != null && lstNewRelated.Count > 0)
+                    @if (lstNewRelated != null && lstNewRelated.Count > 0)
                     {
                         <div class="sidebar-box">
                             <div class="topic-border color-cod-gray mb-5">
                                 <div class="topic-box-lg color-cod-gray">Tin tức liên quan</div>
                             </div>
                             <div class="row">
-                                @foreach(var related in lstNewRelated)
+                                @foreach (var related in lstNewRelated)
                                 {
                                     <div class="col-lg-6 col-md-4 col-sm-6 col-6">
                                         <div class="mt-25 position-relative">
@@ -173,3 +159,6 @@
     </section>
 }
 
+@section Scripts{
+    <script src="~/assets/controller/news.js" asp-append-version="true"></script>
+}

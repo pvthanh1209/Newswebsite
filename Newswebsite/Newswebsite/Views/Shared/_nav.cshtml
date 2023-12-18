@@ -1,5 +1,10 @@
-﻿   <!-- Modal Start-->
-<div class="modal fade" id="myModal" role="dialog">
+﻿@using News.Base.Session
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _httpContextAccessor;
+@{
+    var mems = SessionCustomer.GetUser(_httpContextAccessor);
+}
+<input type="hidden" id="ipUserIdConfirmHidden" />
+<div class="modal fade" id="myModalLogin" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,17 +15,16 @@
                 <div class="login-form">
                     <form>
                         <label>Tài khoản *</label>
-                        <input type="text" placeholder="Tài khoản" />
+                        <input type="text" placeholder="Tài khoản" id="username" />
                         <label>Mật khẩu *</label>
-                        <input type="password" placeholder="Mật khẩu" />
-                        <div class="checkbox checkbox-primary">
-                            <input id="checkbox" type="checkbox" checked>
-                            <label for="checkbox">Ghi nhớ mật khẩu</label>
-                        </div>
-                        <button type="submit" value="Login">Đăng nhập</button>
-                        <button class="form-cancel" type="submit" value="">Đóng</button>
+                        <input type="password" placeholder="Mật khẩu" id="password" />
+                        <button type="button" id="btnLogin" value="Login">Đăng nhập</button>
+                        <button class="form-cancel" data-dismiss="modal" type="button">Đóng</button>
                         <label class="lost-password">
-                            <a href="#">Quên mật khẩu?</a>
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#myModalConfirmMail">Quên mật khẩu?</a>
+                        </label>
+                        <label class="">
+                            Bạn chưa có tài khoản? <a href="javascript:void(0)" data-toggle="modal" data-target="#myModalRegister">Đăng ký</a>
                         </label>
                     </form>
                 </div>
@@ -28,6 +32,165 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="myModalRegister" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="title-login-form">Đăng ký</div>
+            </div>
+            <div class="modal-body">
+                <div class="login-form">
+                    <form id="frmRegister" method="post">
+                        <label>Email *</label>
+                        <input type="text" placeholder="Email" name="Email" />
+                        <label>Họ và tên *</label>
+                        <input type="text" placeholder="Họ và tên" name="FullName" />
+                        <label>Tài khoản *</label>
+                        <input type="text" placeholder="Tài khoản" name="UserName" />
+                        <label>Mật khẩu *</label>
+                        <input type="password" placeholder="Mật khẩu" name="Password" />
+                        <label>Xác nhận mật khẩu *</label>
+                        <input type="password" placeholder="Xác nhận mật khẩu" name="Confirmpassword" />
+                        <button type="button" value="Login" id="btnRegister">Đăng ký</button>
+                        <button class="form-cancel" type="button" data-dismiss="modal">Đóng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModalConfirmMail" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="title-login-form">Quên mật khẩu</div>
+            </div>
+            <div class="modal-body">
+                <div class="login-form">
+                    <form id="frmConfirmEmail" method="post">
+                        <label>Email *</label>
+                        <input type="email" placeholder="Nhập email" id="ipEmailConfirm" />
+                        <button type="button" value="Login" id="btnForgotPass">Gửi email</button>
+                        <button class="form-cancel" type="button" data-dismiss="modal">Đóng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModalConfirmOTP" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="title-login-form">Xác nhận OTP</div>
+            </div>
+            <div class="modal-body">
+                <div class="login-form">
+                    <form id="frmConfirmEmail" method="post">
+                        <label>Mã OTP *</label>
+                        <input type="text" placeholder="Nhập mã OTP" id="ipCodeOTP" />
+                        <button type="button" value="Login" id="btnConfirmOTPForgot">Xác nhận</button>
+                        <button class="form-cancel" type="button" data-dismiss="modal">Đóng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModalResetPassword" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="title-login-form">Đặt lại mật khẩu</div>
+            </div>
+            <div class="modal-body">
+                <div class="login-form">
+                    <form id="frmResetPassword" method="post">
+                        <label>Mật khẩu *</label>
+                        <input type="password" placeholder="Mật khẩu" id="ipPasswordNewReset" name="Password" />
+                        <label>Xác nhận mật khẩu *</label>
+                        <input type="password" placeholder="Xác nhận mật khẩu" id="ipConfirmPasswordNewReset" name="Confirmpassword" />
+                        <button type="button" value="Login" id="btnResetPass">Đặt lại mật khẩu</button>
+                        <button class="form-cancel" type="button" data-dismiss="modal">Đóng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (mems != null)
+{
+    <div class="modal fade" id="myModalChangePassword" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="title-login-form">Đổi mật khẩu</div>
+                </div>
+                <div class="modal-body">
+                    <div class="login-form">
+                        <form id="frmChangePassword" method="post">
+                            <label>Mật khẩu cũ *</label>
+                            <input type="password" placeholder="Mật khẩu" name="OldPassword" />
+                            <label>Mật khẩu mới *</label>
+                            <input type="password" placeholder="Mật khẩu mới" name="NewPassword" />
+                            <label>Xác nhận mật khẩu *</label>
+                            <input type="password" placeholder="Xác nhận mật khẩu" name="Confirmpassword" />
+                            <button type="button" value="Login" id="btnChangePassword">Đổi mật khẩu</button>
+                            <button class="form-cancel" type="button" data-dismiss="modal">Đóng</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalProfile" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="title-login-form">Thay đổi thông tin cá nhân</div>
+                </div>
+                <div class="modal-body">
+                    <div class="login-form">
+                        <form id="frmEditProject" method="post">
+                            <label>Họ và tên</label>
+                            <input type="text" placeholder="Vui lòng nhập họ và tên" name="FullName" value="@mems.FullName" />
+                            <label>Tài khoản</label>
+                            <input type="text" name="Username" value="@mems.Username" readonly />
+                            <label>Email</label>
+                            <input type="text" name="Email" value="@mems.Email" />
+                            <label>Số điện thoại</label>
+                            <input type="text" name="PhoneNumber" value="@mems.Phone" />
+                            <label>Giới tính</label>
+                            <select class="form-select" name="Gender">
+                                @if (mems.Gender == false)
+                                {
+                                    <option value="0" selected>Nam</option>
+                                    <option value="1">Nữ</option>
+                                }
+                                else
+                                {
+                                    <option value="0">Nam</option>
+                                    <option value="1" selected>Nữ</option>
+                                }
+                            </select>
+                            <label>Ngày sinh</label>
+                            <input type="date" name="BirthDay" value="@(mems.BirthDay != null ? mems.BirthDay.Value.ToString("yyyy-MM-dd") : null)" />
+                            <button type="button" value="Login" id="btnEditProfile">Lưu</button>
+                            <button class="form-cancel" type="button" data-dismiss="modal">Đóng</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 <!-- Modal End-->
 <!-- Offcanvas Menu Start -->
 <div id="offcanvas-body-wrapper" class="offcanvas-body-wrapper">
@@ -44,7 +207,7 @@
                     <a href="/">
                         <i class="fa fa-home" aria-hidden="true"></i>Trang chủ
                     </a>
-                </div>                
+                </div>
             </li>
             <li>
                 <a href="/News">

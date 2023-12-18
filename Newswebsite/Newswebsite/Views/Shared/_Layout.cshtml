@@ -36,6 +36,7 @@
     <link href="~/assets/css/ie-only.css" rel="stylesheet" />
     <!-- Modernizr Js -->
     <script src="~/assets/js/modernizr-2.8.3.min.js"></script>
+    <link href="~/admin/assets/css/toastr.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -78,9 +79,19 @@
     <script src="~/assets/js/ticker.js"></script>
     <!-- Custom Js -->
     <script src="~/assets/js/main.js"></script>
+    <script src="~/assets/controller/base.js"></script>
+    <script src="~/admin/assets/js/toastr.min.js"></script>
+    <script src="~/assets/controller/login.js"></script>
+    <script>
+        $('#myModalRegister').on('show.bs.modal', function (e) {
+            $('#myModalLogin').modal('hide');
+        });
+    </script>
+    <script>
+        $('#myModalConfirmMail').on('show.bs.modal', function (e) {
+            $('#myModalLogin').modal('hide');
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
-
-
-<!-- Mirrored from www.radiustheme.com/demo/html/newsedge/newsedge/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Dec 2023 07:03:25 GMT -->
 </html>

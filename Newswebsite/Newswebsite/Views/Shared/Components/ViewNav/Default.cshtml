@@ -23,7 +23,7 @@
                                 @foreach (var parent in ckCateDetail)
                                 {
                                     <li>
-                                        <a href="post-style-1.html">@parent.Name</a>
+                                        <a href="/Category/CateDetail?Id=@parent.Id">@parent.Name</a>
                                     </li>
                                 }                                               
                             </ul>
@@ -34,7 +34,7 @@
             else
             {
                 <li>
-                    <a href="archive.html">
+                    <a href="/Category?Id=@item.Id">
                         <i class="fa fa-archive" aria-hidden="true"></i>@item.CateName
                     </a>
                 </li>

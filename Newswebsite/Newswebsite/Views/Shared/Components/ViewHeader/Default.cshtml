@@ -17,7 +17,7 @@
                         @foreach (var parent in ckCateDetail)
                         {
                             <li>
-                                <a href="author-post.html">@parent.Name</a>
+                                <a href="/Category/CateDetail?Id=@parent.Id">@parent.Name</a>
                             </li>
                         }                 
                     </ul>
@@ -26,7 +26,7 @@
             else
             {
                 <li>
-                    <a href="post-style-1.html">@item.CateName</a>
+                    <a href="/Category?Id=@item.Id">@item.CateName</a>
                 </li>
             }
         }

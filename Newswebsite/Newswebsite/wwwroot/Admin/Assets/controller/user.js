@@ -78,16 +78,16 @@
                     }
                 },
                 {
-                    field: "hide",
+                    field: "isActive",
                     title: "Trạng thái",
                     align: 'left',
                     valign: 'left',
                     formatter: function (value, row, index) {
                         var html = '';
                         if (value == true) {
-                            html += '<button class="btn btn-danger btn-sm btnHidden">Ẩn</button>';
+                            html += '<button class="btn btn-danger btn-sm btnHidden">Kích hoạt</button>';
                         } else {
-                            html += '<button class="btn btn-success btn-sm btnHidden">Hiển thị</button>';
+                            html += '<button class="btn btn-success btn-sm btnHidden">Ngừng hoạt động</button>';
                         }
                         return html;
                     },

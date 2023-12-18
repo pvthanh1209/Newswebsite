@@ -1,4 +1,8 @@
-﻿        <!-- Header Area Start Here -->
+﻿@using News.Base.Session
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _httpContextAccessor;
+@{
+    var mems = SessionCustomer.GetUser(_httpContextAccessor);
+}
 <header>
     <div id="header-layout1" class="header-style1">
         <div class="main-menu-area bg-primarytextcolor header-menu-fixed" id="sticker">
@@ -11,22 +15,23 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-xl-8 col-lg-7 position-static min-height-none">
+                    <div class="col-xl-7 col-lg-7 position-static min-height-none">
                         <div class="ne-main-menu">
                             <nav id="dropdown">
                                 <ul>
                                     <li class="active">
                                         <a href="/">Trang chủ</a>
                                     </li>
+
                                     <li>
-                                        <a href="/News">Tin tức</a>                                  
+                                        <a href="/News">Tin tức</a>
                                     </li>
                                     @await Component.InvokeAsync("ViewHeader")
                                 </ul>
                             </nav>
                         </div>
                     </div>
-                    <div class="col-xl-2 col-lg-3 col-md-12 text-right position-static">
+                    <div class="col-xl-3 col-lg-3 col-md-12 text-right position-static">
                         <div class="header-action-item">
                             <ul>
                                 <li>
@@ -38,9 +43,26 @@
                                     </form>
                                 </li>
                                 <li>
-                                    <button type="button" class="login-btn" data-toggle="modal" data-target="#myModal">
-                                        <i class="fa fa-user" aria-hidden="true"></i>Login
-                                    </button>
+                                    @if (mems != null)
+                                    {
+                                    //<div class="dropdown">
+                                        <button type="button" class="login-btn" data-toggle="dropdown">
+                                            @mems.Username
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item p-3" style="font-size:14px;" data-toggle="modal" data-target="#myModalProfile" href="javscript:void(0)">Thông tin cá nhân</a>
+                                            <a class="dropdown-item p-3" style="font-size:14px;" href="/News/HistoryViewNews">Tin tức đã xem</a>
+                                            <a class="dropdown-item p-3" data-toggle="modal" data-target="#myModalChangePassword" style="font-size:14px;" href="javascript:void(0)">Đổi mật khẩu</a>
+                                            <a class="dropdown-item p-3" style="font-size:14px;" href="/Login/Logout">Đăng xuất</a>
+                                        </div>
+                                        //</div>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="login-btn" data-toggle="modal" data-target="#myModalLogin">
+                                            <i class="fa fa-user" aria-hidden="true"></i>Login
+                                        </button>
+                                    }
                                 </li>
                                 <li>
                                     <div id="side-menu-trigger" class="offcanvas-menu-btn">
@@ -91,7 +113,7 @@
             </li>
             <li>
                 <i class="fa fa-calendar" aria-hidden="true"></i><span id="current_date"></span>
-            </li>           
+            </li>
         </ul>
     </div>
 </section>

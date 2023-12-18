@@ -13,7 +13,7 @@
                 <div class="row tab-space1">
                     <div class="col-lg-6 col-md-12">
                         <div class="img-overlay-70 img-scale-animate mb-2">
-                            <img src="/Uploads/Images/@newsHotOne.Thumb" style="height:432px;" alt="news" class="img-fluid width-100">
+                            <img src="/Uploads/Images/@newsHotOne.Thumb" onclick="window.location.href=/News/NewDetail?Id=@newsHotOne.Id" style="height:432px;" alt="news" class="img-fluid width-100">
                             <div class="mask-content-lg">
                                 <div class="topic-box-sm color-cinnabar mb-20">@newsHotOne.CateName</div>
                                 <div class="post-date-light">
@@ -62,7 +62,7 @@
                                                     <a href="/News/NewDetail?Id=@item.Id">@item.Title </a>
                                                 </h3>
                                             </div>
-                                            <img src="/Uploads/Images/@item.Thumb" alt="news" class="img-fluid width-100">
+                                            <img src="/Uploads/Images/@item.Thumb" alt="news" style="width:276px; height:218px;" class="img-fluid width-100">
                                         </div>
                                     </div>
                                 }
@@ -84,7 +84,7 @@
                             <div class="topic-border color-cinnabar mb-30">
                                 <div class="topic-box-lg color-cinnabar">Tin nóng</div>
                                 <div class="more-info-link">
-                                    <a href="post-style-1.html">
+                                    <a href="/News/NewsIstHot">
                                         Xem thêm
                                         <i class="fa fa-angle-right" aria-hidden="true"></i>
                                     </a>

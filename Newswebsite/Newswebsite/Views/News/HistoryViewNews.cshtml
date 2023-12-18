@@ -1,27 +1,22 @@
 ﻿@model List<News.Base.Models.News>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lịch sử tin tức đã xem";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var cateName = string.Empty;
-    if(Model != null && Model.Count > 0)
-    {
-        cateName = Model[0].CateName;
-    }
 }
 <section class="breadcrumbs-area" style="background-image: url('/assets/img/banner/breadcrumbs-banner.jpg');">
     <div class="container">
         <div class="breadcrumbs-content">
-            <h1>Tin tức @cateName</h1>
+            <h1>Tin tức đã xem</h1>
             <ul>
                 <li>
                     <a href="/">Trang chủ</a> -
                 </li>
-                <li>Danh sách tin tức @cateName</li>
+                <li>Lịch sử tin tức đã xem</li>
             </ul>
         </div>
     </div>
 </section>
-@if(Model != null && Model.Count > 0)
+@if (Model != null && Model.Count > 0)
 {
     <section class="bg-body section-space-less30">
         <div class="container">
@@ -91,6 +86,8 @@
 }
 else
 {
-    <p>Đang cập nhật...</p>
+    <p>Không có tin tức nào đã xem</p>
 }
+
+
 

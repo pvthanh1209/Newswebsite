@@ -1,4 +1,5 @@
 using Doctors.Base;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using News.Base;
 using News.Base.Models;
@@ -12,6 +13,11 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromDays(10);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+});
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.ValueCountLimit = int.MaxValue;
+    options.ValueLengthLimit = int.MaxValue;
 });
 builder.Services.AddMvc();
 var connectionString = string.Empty;

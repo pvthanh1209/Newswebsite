@@ -22,6 +22,7 @@ namespace News.Base.Models
         public virtual DbSet<News> News { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<CategoriesDetail> CategoriesDetails { get; set; } = null!;
+        public virtual DbSet<HistoryViewNews> HistoryViewNews { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,12 +51,20 @@ namespace News.Base.Models
 
                 entity.Property(e => e.Title).HasMaxLength(500);
             });
+            modelBuilder.Entity<HistoryViewNews>(entity =>
+            {
+                entity.Property(e => e.Id);
+
+                entity.Property(e => e.NewsId);
+
+                entity.Property(e => e.UserId);
+            });
 
             modelBuilder.Entity<Comment>(entity =>
             {
-                entity.HasNoKey();
+                entity.ToTable("Comments");
 
-                entity.Property(e => e.Comment1).HasColumnName("Comment");
+                entity.Property(e => e.ContentComment).HasColumnName("ContentComment");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
