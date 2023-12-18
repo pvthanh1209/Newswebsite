@@ -119,5 +119,27 @@ namespace News.Base.Implement
             }
             return data;
         }
+
+        public List<Models.News> GetNewsSearch(string search, int offset, int limit)
+        {
+            var list = new List<Models.News>();
+            var unitOfWork = new UnitOfWorkFactory(_cnnString);
+            try
+            {
+                using (var u = unitOfWork.Create(false))
+                {
+                    var p = new DynamicParameters();
+                    p.Add("@search", search);
+                    p.Add("@offset", offset);
+                    p.Add("@limit", limit);
+                    list = u.GetIEnumerable<Models.News>("sp_GetNewsSearch", p).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return list;
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace News.Base.Interface
         List<News.Base.Models.News> GetNewsIsHotAndIsHome();
         List<News.Base.Models.News> GetNewsIsHotHome();
         List<News.Base.Models.News> GetNewsIsActiveAll();
+        List<News.Base.Models.News> GetNewsSearch(string search, int offset, int limit);
         News.Base.Models.News GetNewsById(int Id);
     }
 }

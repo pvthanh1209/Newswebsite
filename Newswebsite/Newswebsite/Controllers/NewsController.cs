@@ -15,14 +15,18 @@ namespace Newswebsite.Controllers
         }
         public IActionResult Index(int? page)
         {
+            int total = 0;
             int pageSize = 15;
             int pageNumber = page ?? 1;
             int startIndex = (pageNumber - 1) * pageSize;
-            List<News.Base.Models.News> lstNews = _base.news.GetNewsIsActiveAll();
-            List<News.Base.Models.News> model = lstNews.Take(pageSize).Skip(startIndex).ToList();
+            List<News.Base.Models.News> model = _base.news.GetNewListAllPaging(null, 0, startIndex, pageSize);
+            if (model != null && model.Count > 0)
+            {
+                total = model[0].TotalRow;
+            }
             // Truyền dữ liệu phân trang vào view
             ViewBag.CurrentPage = pageNumber;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)lstNews.Count / pageSize);
+            ViewBag.TotalPages = (int)Math.Ceiling((double)total / pageSize);
             return View(model);
         }
         public IActionResult NewDetail(int Id)
@@ -130,6 +134,26 @@ namespace Newswebsite.Controllers
             {
                 return false;
             }           
+        }
+        public IActionResult NewsSearch(string search, int? page)
+        {
+            if (string.IsNullOrEmpty(search))
+            {
+                search = string.Empty;
+            }
+            var total = 0;
+            ViewBag.Search = search;    
+            int pageSize = 15;
+            int pageNumber = page ?? 1;
+            int startIndex = (pageNumber - 1) * pageSize;
+            List<News.Base.Models.News> model = _base.news.GetNewsSearch(search, startIndex, pageSize);
+            if(model != null && model.Count > 0)
+            {
+                total = model[0].TotalRow;
+            }
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)total / pageSize);
+            return View(model);
         }
     }
 }

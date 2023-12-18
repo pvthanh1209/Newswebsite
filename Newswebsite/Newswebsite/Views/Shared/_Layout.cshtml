@@ -92,6 +92,13 @@
             $('#myModalLogin').modal('hide');
         });
     </script>
+    <script>
+        $('#ipSearchAll').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('form#top-search-form').submit();             
+            }
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
