@@ -14,7 +14,6 @@
     }
     var lstCate = (List<Category>)ViewBag.ListCate;
 }
-
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -97,7 +96,14 @@
 </div>
 @section scripts {
     <script>
-        var editor = base.CreateCKEditor('TxtDescription');
+        // var editor = base.CreateCKEditor('TxtDescription');
+        $(document).ready(function () {
+            CKEDITOR.replace("Description", {
+                height: 300,
+                filebrowserImageUploadUrl: '/Admin/News/UploadImage',
+                filebrowserBrowseUrl: '/Admin/News/UploadExporer'
+            });
+        });
     </script>
 }
 

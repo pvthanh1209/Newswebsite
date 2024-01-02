@@ -78,58 +78,59 @@
         document.execCommand("copy");
         $temp.remove();
     },
-    CreateCKEditor: function (elName) {
-        var editor = CKEDITOR.replace(elName, {
-            height: 200,
-            allowedContent: true,
-            removePlugins: 'showblocks',
-            filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
-            filebrowserImageBrowseUrl: '/ckfinder/ckfinder.html?type=Images',
-            filebrowserFlashBrowseUrl: '/ckfinder/ckfinder.html?type=Flash',
-            filebrowserUploadUrl: '/ckfinder/connector?command=QuickUpload&type=Files',
-            filebrowserImageUploadUrl: '/ckfinder/connector?command=QuickUpload&type=Images',
-            filebrowserFlashUploadUrl: '/ckfinder/connector?command=QuickUpload&type=Flash',
-            filebrowserWindowWidth: '1000',
-            filebrowserWindowHeight: '700',
-            language: 'vi'
+    //CreateCKEditor: function (elName) {
+    //    var editor = CKEDITOR.replace(elName, {
+    //        height: 200,
+    //        allowedContent: true,
+    //        removePlugins: 'showblocks',
+    //      /*  filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
+    //        filebrowserImageBrowseUrl: '/ckfinder/ckfinder.html?type=Images',
+    //        filebrowserFlashBrowseUrl: '/ckfinder/ckfinder.html?type=Flash',*/
+    //        filebrowserUploadUrl: '/Admin/News/UploadImage',
+    //      /*  filebrowserImageUploadUrl: '/ckfinder/connector?command=QuickUpload&type=Images',
+    //        filebrowserFlashUploadUrl: '/ckfinder/connector?command=QuickUpload&type=Flash',*/
+    //        filebrowserWindowWidth: '1000',
+    //        filebrowserWindowHeight: '700',
+    //        language: 'vi'
 
-        }).on('instanceReady', function (ev) {
-            var editor = ev.editor,
-                dataProcessor = editor.dataProcessor,
-                htmlFilter = dataProcessor && dataProcessor.htmlFilter;
-            htmlFilter.addRules({
-                elements: {
-                    img: function (element) {
-                        console.log(element.html);
-                        var src = element.attributes.src;
-                        if (src.indexOf(AppConfig.FEUrlRoot + "Uploads/") == -1) {
-                            $.ajax({
-                                type: "POST",
-                                url: "/Handler/DownloadImageFromUrl",
-                                async: false,
-                                data: { imageUrl: src },
-                                beforeSend: function () {
-                                    backend.startLoading();
-                                },
-                                success: function (r) {
-                                    backend.stopLoading();
-                                    element.attributes.src = r.fileName;
-                                    element.attributes['data-cke-saved-src'] = r.fileName;
-                                    element.attributes.width = r.width;
-                                    element.attributes.height = r.height;
-                                    element.attributes.alt = r.fileName;
-                                },
-                                error: function () {
-                                    backend.stopLoading();
-                                }
-                            });
-                        }
-                    }
-                }
-            });
-        });
-        return editor;
-    }
+
+    //    }).on('instanceReady', function (ev) {
+    //        var editor = ev.editor,
+    //            dataProcessor = editor.dataProcessor,
+    //            htmlFilter = dataProcessor && dataProcessor.htmlFilter;
+    //        htmlFilter.addRules({
+    //            elements: {
+    //                img: function (element) {
+    //                    console.log(element.html);
+    //                    var src = element.attributes.src;
+    //                    if (src.indexOf(AppConfig.FEUrlRoot + "Uploads/") == -1) {
+    //                        $.ajax({
+    //                            type: "POST",
+    //                            url: "/Handler/DownloadImageFromUrl",
+    //                            async: false,
+    //                            data: { imageUrl: src },
+    //                            beforeSend: function () {
+    //                                backend.startLoading();
+    //                            },
+    //                            success: function (r) {
+    //                                backend.stopLoading();
+    //                                element.attributes.src = r.fileName;
+    //                                element.attributes['data-cke-saved-src'] = r.fileName;
+    //                                element.attributes.width = r.width;
+    //                                element.attributes.height = r.height;
+    //                                element.attributes.alt = r.fileName;
+    //                            },
+    //                            error: function () {
+    //                                backend.stopLoading();
+    //                            }
+    //                        });
+    //                    }
+    //                }
+    //            }
+    //        });
+    //    });
+    //    return editor;
+    //}
 };
 $(document).ready(function () {
 

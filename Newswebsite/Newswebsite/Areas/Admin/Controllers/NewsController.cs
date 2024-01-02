@@ -7,9 +7,10 @@ namespace Newswebsite.Areas.Admin.Controllers
 {
     public class NewsController : BaseController<NewsController>
     {
-        public NewsController(ILogger<NewsController> logger, IHttpContextAccessor httpContextAccessor, IConfiguration configuration, IBase @base) : base(@base, httpContextAccessor, configuration, logger)
+        private IWebHostEnvironment _hostingEnvironment;
+        public NewsController(ILogger<NewsController> logger, IHttpContextAccessor httpContextAccessor, IConfiguration configuration, IBase @base, IWebHostEnvironment hostingEnvironment) : base(@base, httpContextAccessor, configuration, logger)
         {
-
+            _hostingEnvironment = hostingEnvironment;
         }
         public IActionResult Index()
         {
@@ -184,6 +185,36 @@ namespace Newswebsite.Areas.Admin.Controllers
         {
             var entity = _base.categoriesDetail.Get(x => x.CateId == Id).ToList();
             return Data(entity);
+        }
+        [HttpPost]
+        public ActionResult UploadImage(IFormFile upload)
+        {
+            if (upload != null && upload.Length > 0)
+            {
+                var fileName = Path.GetFileName(upload.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+                var fi = new FileInfo(filePath);
+                if (!Directory.Exists(fi.DirectoryName))
+                {
+                    Directory.CreateDirectory(fi.DirectoryName);
+                }
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    upload.CopyTo(fileStream);
+                }
+
+                var imageUrl = "/images/" + fileName;
+
+                return Json(new { uploaded = true, url = imageUrl });
+            }
+
+            return Json(new { uploaded = false, error = new { message = "Upload failed" } });
+        }
+        public IActionResult UploadExporer()
+        {
+            var dir = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), _hostingEnvironment.WebRootPath, "images"));
+            ViewBag.fileInfo = dir.GetFiles();
+            return View("FileExplorer");
         }
     }
 }

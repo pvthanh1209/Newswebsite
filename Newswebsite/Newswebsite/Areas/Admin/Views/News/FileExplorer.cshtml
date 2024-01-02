@@ -1,0 +1,8 @@
+﻿<div id="browseFile">
+    @foreach (var item in ViewBag.fileInfo)
+    {
+        <div class="img-thumbnail">
+            <img src="/images/@item" alt="thumb" title="@item" width="120" height="100" />
+        </div>
+    }
+</div>
